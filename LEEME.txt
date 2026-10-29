@@ -1,0 +1,25 @@
+El Portal del Pueblo - web estática
+===================================
+
+Contenido
+  index.html     La página (animaciones, estilos y lógica).
+  content.json   Todos los textos, separados por diapositiva (id, número, nombre y contenido).
+  img/           Imágenes: portada.jpg, cobro.jpg, ishikawa.jpg, topologia.jpg.
+
+Cómo usarla
+  1. Subí la carpeta completa a cualquier hosting estático (Netlify, GitHub Pages,
+     Cloudflare Pages, un servidor Apache/Nginx, etc.) y abrí index.html.
+  2. Para probarla en tu computadora con doble clic en index.html alcanza, pero en ese
+     caso el navegador no puede leer content.json y muestra una copia de los textos que
+     lleva incrustada en el HTML. Para ver tus ediciones del JSON, abrila desde un
+     servidor local, por ejemplo:  python3 -m http.server   y entrá a http://localhost:8000
+
+Cómo editar textos
+  Abrí content.json y cambiá el texto de la diapositiva que quieras. No hace falta tocar
+  el HTML. Mantené los "id" de cada diapositiva y el orden de las claves.
+  Para cambiar una imagen, reemplazá el archivo dentro de img/ con el mismo nombre
+  (o cambiá la ruta "src" en content.json).
+
+Notas
+  - Las tipografías vienen de Google Fonts; sin internet se usan tipografías del sistema.
+  - Hacé clic en el diagrama de Diagnóstico o en la topología de Arquitectura para ampliarlos.

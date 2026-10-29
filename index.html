@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El Portal del Pueblo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1f47;--bg2:#162a5c;--ink:#f7f1e5;--mute:#aab6d4;--pink:#f0589b;--orange:#ff8a3d;--yellow:#f4c430;--green:#7fc45a;--line:rgba(247,241,229,.16);
+--h:"Bricolage Grotesque","Trebuchet MS",sans-serif;--b:"Hanken Grotesk","Segoe UI",Arial,sans-serif;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-snap-type:y proximity;scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+@media(min-width:900px) and (min-height:640px){html{scroll-snap-type:y mandatory}}
+body{margin:0;color:var(--ink);font:400 clamp(1rem,1.15vw,1.15rem)/1.55 var(--b)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+/* fondo fijo: imagen de portada + velo del color de la página */
+#bg{position:fixed;inset:0;z-index:0;background:var(--bg);overflow:hidden}
+#bg .img{position:absolute;inset:0;background-size:cover;background-position:74% center;background-repeat:no-repeat;animation:ken 2.6s cubic-bezier(.2,.7,.2,1) both}
+#bg .veil{position:absolute;inset:0;background:var(--bg);opacity:var(--v,0)}
+@keyframes ken{from{opacity:0;transform:scale(1.08)}}
+#bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:4px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--pink),var(--orange));z-index:31}
+nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:20}
+nav a{width:12px;height:12px;border-radius:50%;border:2px solid var(--mute);background:rgba(13,31,71,.6);transition:.3s}
+nav a.on{background:var(--pink);border-color:var(--pink);transform:scale(1.5)}
+@media(max-width:899px){nav{display:none}}
+section{position:relative;z-index:1;min-height:100vh;min-height:100svh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:clamp(4.5rem,9vh,6rem) clamp(1.25rem,6vw,6rem) clamp(3rem,7vh,5rem);overflow:hidden}
+.wrap{width:100%;max-width:1180px;margin:0 auto}
+.tag{display:inline-flex;align-items:center;gap:.6rem;color:var(--pink);font-weight:700;font-size:.95rem;margin-bottom:.9rem}
+.tag::before{content:"";width:28px;height:3px;background:var(--pink);border-radius:2px}
+h1,h2{font-family:var(--h);font-weight:800;line-height:1.05;margin:0 0 1rem;letter-spacing:-.015em}
+h1{font-size:clamp(2rem,4.6vw,3.8rem)}
+h2{font-size:clamp(1.9rem,4vw,3.3rem);max-width:20ch}
+h2.wide{max-width:26ch}
+.lead{color:var(--mute);font-size:1.15em;max-width:52ch;margin:0 0 1.6rem}
+h3{font-family:var(--h);font-size:1.25rem;margin:0 0 .35rem}
+p{margin:0}
+.note{background:var(--yellow);color:#14193a;border-radius:18px;padding:1.1rem 1.5rem;font-weight:500;font-size:1.1em;margin-top:1.6rem;max-width:62ch}
+.card{background:rgba(22,42,92,.92);border-radius:20px;padding:1.4rem}
+.grid{display:grid;gap:1.1rem}
+.g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.badge{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--pink);color:var(--bg);font:800 1rem var(--h);margin-bottom:.8rem}
+.badge.o{background:var(--orange)}
+[data-r]{opacity:0;transform:translateY(var(--dy,34px));transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0)*110ms)}
+[data-r=l]{transform:translateX(-60px)}[data-r=r]{transform:translateX(60px)}[data-r=z]{transform:scale(.88)}
+.in [data-r]{opacity:1;transform:none}
+/* al perder el foco la sección se oculta (el fondo fijo no) */
+section:not(.in) [data-r]{transition-duration:.45s;transition-delay:calc(var(--i,0)*25ms)}
+section:not(.in) :is(.steps i,.fig img,.shot img,#rel line,#rel .n){transition-delay:0s!important;transition-duration:.4s!important}
+section:not(.in) .tl::before{transition-delay:0s;transition-duration:.4s}
+section:not(.in) .scroll{opacity:0}
+/* portada */
+#portada{padding-top:clamp(3rem,7vh,5rem)}
+.hcard{background:rgba(13,31,71,.94);border-radius:26px;padding:clamp(1.4rem,3vw,2.6rem);max-width:640px;box-shadow:0 30px 80px rgba(8,16,44,.45)}
+@media(max-width:899px){#portada{justify-content:flex-end}#bg .img{background-position:78% top}}
+.steps{display:flex;align-items:center;margin-top:1.8rem}
+.steps i{flex:1;height:5px;background:var(--pink);transform:scaleX(0);transform-origin:left;transition:transform .9s ease;transition-delay:calc(var(--i)*350ms + 900ms)}
+.in .steps i{transform:none}.steps i.o{background:var(--orange)}
+.steps b{display:grid;place-items:center;width:46px;height:46px;flex:none;border-radius:50%;background:var(--pink);color:var(--bg);font-family:var(--h)}
+.steps b.o{background:var(--orange)}
+.stl{display:flex;justify-content:space-between;gap:.5rem;color:var(--mute);font-size:.95rem;margin-top:.5rem}
+.scroll{transition:opacity .5s;position:absolute;bottom:1.2rem;left:50%;translate:-50% 0;color:#14193a;font-size:.85rem;font-weight:700;animation:bob 1.8s ease-in-out infinite;text-shadow:0 0 8px rgba(247,241,229,.9)}
+@keyframes bob{50%{translate:-50% 8px}}
+/* diagnóstico y arquitectura: texto + imagen ampliable */
+.split{display:grid;gap:2rem;align-items:center}
+@media(min-width:900px){.split{grid-template-columns:minmax(0,.85fr) minmax(0,1.35fr)}}
+.actors{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+.actors span{border:1.5px solid var(--line);border-radius:99px;padding:.3rem .85rem;font-size:.92rem;background:rgba(13,31,71,.6)}
+.bul{margin:0;padding:0;list-style:none;display:grid;gap:.9rem}
+.bul li{padding-left:1.4rem;position:relative}
+.bul li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--pink)}
+.shot{position:relative;display:block;width:100%;padding:0;border:0;background:none;border-radius:18px;overflow:hidden;cursor:zoom-in;box-shadow:0 24px 60px rgba(5,10,30,.45);color:inherit;font:inherit}
+.shot img{display:block;width:100%;height:auto;clip-path:inset(0 0 0 100%);transform:scale(1.08);transition:clip-path 1.1s cubic-bezier(.2,.7,.2,1) .3s,transform 2.4s cubic-bezier(.2,.7,.2,1) .3s}
+.in .shot img{clip-path:inset(0);transform:none}
+.shot .hint{position:absolute;right:12px;bottom:12px;background:rgba(13,31,71,.9);color:var(--ink);border-radius:99px;padding:.3rem .8rem;font-size:.85rem;font-weight:700}
+/* visor ampliado */
+#lb{position:fixed;inset:0;z-index:50;display:flex;overflow:auto;background:rgba(6,12,32,.95);padding:4.2rem 1rem 3.4rem;animation:fade .3s ease both}
+#lb[hidden]{display:none}
+@keyframes fade{from{opacity:0}}
+#lb img{margin:auto;width:auto;height:auto;max-width:96vw;max-height:calc(100vh - 8rem);border-radius:10px;background:#fff;cursor:zoom-in;flex:none}
+#lb.z img{max-width:none;max-height:none;width:min(200vw,3000px);cursor:zoom-out}
+#lb .x{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;width:46px;height:46px;border-radius:50%;border:0;background:var(--yellow);color:#14193a;font-size:1.3rem;font-weight:800;cursor:pointer;z-index:2}
+#lb .hint{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);text-align:center;color:var(--mute);font-size:.9rem;pointer-events:none;margin:0}
+/* uso cotidiano */
+.two{display:grid;gap:2.2rem;align-items:center}
+@media(min-width:900px){.two{grid-template-columns:1.25fr .75fr}}
+.chk li{padding:.7rem 0 .7rem 2.4rem;position:relative;border-bottom:1px solid var(--line)}
+.chk li::before{content:"✓";position:absolute;left:0;top:.7rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--pink);color:var(--bg);display:grid;place-items:center;font-weight:800;font-size:.9rem}
+.fig{justify-self:center;width:100%;max-width:340px;margin:0}
+.fig img{display:block;width:100%;height:clamp(300px,64vh,600px);object-fit:cover;object-position:50% 30%;border-radius:26px;box-shadow:0 24px 60px rgba(5,10,30,.5);clip-path:inset(100% 0 0 0 round 26px);transform:scale(1.1);transition:clip-path 1.4s cubic-bezier(.2,.7,.2,1) .35s,transform 3.2s cubic-bezier(.2,.7,.2,1) .35s}
+.in .fig img{clip-path:inset(0 round 26px);transform:none}
+/* datos */
+#rel{width:100%;max-width:520px;justify-self:center}
+#rel line{stroke:var(--yellow);stroke-width:2;stroke-dasharray:140;stroke-dashoffset:140;transition:stroke-dashoffset 1s ease;transition-delay:calc(var(--i)*140ms + .5s)}
+.in #rel line{stroke-dashoffset:0}
+#rel .n{transform-box:fill-box;transform-origin:center;transform:scale(0);transition:transform .6s cubic-bezier(.3,1.6,.5,1);transition-delay:calc(var(--i)*140ms + .8s)}
+.in #rel .n{transform:scale(1)}
+#rel text{font:700 11px var(--b);fill:#14193a;text-anchor:middle}
+/* código */
+.code{font:.88rem/1.7 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;color:var(--ink)}
+.code .k{color:#ff7e6b}.code .s{color:#8fc3ff}
+.card h3.cl{color:var(--mute);font-weight:500;font-size:1rem;margin-bottom:.8rem}
+.small{color:var(--mute);font-size:.92rem;margin-top:.8rem;max-width:90ch}
+/* incidentes */
+.tl{position:relative}
+@media(min-width:900px){.tl{grid-template-columns:repeat(4,1fr)}}
+.tl::before{content:"";position:absolute;left:23px;right:calc(25% - .825rem - 23px);top:23px;height:3px;background:var(--pink);transform:scaleX(0);transform-origin:left;transition:transform 1.6s ease .4s}
+.in .tl::before{transform:none}
+.tl .badge{position:relative;z-index:1;box-shadow:0 0 0 6px var(--bg)}
+@media(max-width:899px){.tl::before{display:none}}
+/* capacitación */
+.dur{display:inline-block;border:1.5px solid var(--ink);border-radius:99px;padding:.1rem .8rem;margin-top:.8rem;font-size:.9rem}
+.ico{width:48px;height:48px;border-radius:12px;background:var(--pink);color:var(--bg);display:grid;place-items:center;font-size:1.4rem;margin-bottom:.9rem}
+/* valor */
+.kpi{display:grid;gap:1.4rem;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:2rem}
+.kpi div{border-left:2px solid var(--line);padding-left:1.1rem}
+.kpi b{display:block;font:800 clamp(2.8rem,6vw,4.6rem)/1 var(--h)}
+.kpi div:first-child b{color:var(--pink)}
+.kpi span{color:var(--ink);font-size:1.1rem}
+.cols{display:grid;gap:1.8rem}
+@media(min-width:900px){.cols{grid-template-columns:1fr 1fr}}
+footer{margin-top:1.4rem;color:var(--mute);max-width:62ch}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}[data-r]{opacity:1;transform:none}.fig img,.shot img{clip-path:none;transform:none}#rel line{stroke-dashoffset:0!important}}
+</style>
+</head>
+<body>
+<div id="bg"><div class="img" id="bgimg"></div><div class="veil"></div></div>
+<div id="bar"></div>
+<nav id="nav"></nav>
+<main id="app"></main>
+
+<!-- Contenido de respaldo: es el mismo que content.json. Si existe un content.json junto a esta página, se usa ese. -->
+<script type="application/json" id="contenido">{
+  "meta": {
+    "titulo": "El Portal del Pueblo necesita una operación digital más confiable",
+    "navegacion": "Secciones",
+    "indicadorScroll": "Desplazá hacia abajo ↓",
+    "ampliar": "Ampliar imagen",
+    "cerrar": "Cerrar imagen",
+    "ayudaZoom": "Hacé clic en la imagen para acercar o alejar. Esc para cerrar."
+  },
+  "diapositivas": [
+    {
+      "id": "portada",
+      "numero": 1,
+      "nombre": "Inicio",
+      "contenido": {
+        "fondo": {
+          "src": "img/portada.jpg",
+          "alt": "Ilustración azul de un mercado comunitario"
+        },
+        "etiqueta": "Mercado Comunitario · San Rafael",
+        "titulo": "El Portal del Pueblo necesita una operación digital más confiable",
+        "bajada": "Red segura, protección de datos, gestión de incidentes y capacitación.",
+        "pasos": [
+          "Diagnóstico",
+          "Operación",
+          "Mejora continua"
+        ]
+      }
+    },
+    {
+      "id": "diagnostico",
+      "numero": 2,
+      "nombre": "Diagnóstico",
+      "contenido": {
+        "etiqueta": "Diagnóstico",
+        "titulo": "El problema combina saturación, red compartida y falta de control",
+        "bajada": "Cinco familias explican la falla; seis actores la viven.",
+        "actoresTitulo": "Quiénes la viven",
+        "actores": [
+          "Municipalidad",
+          "Tecnología",
+          "Comerciantes",
+          "Administración",
+          "Proveedores",
+          "Visitantes"
+        ],
+        "imagen": {
+          "src": "img/ishikawa.jpg",
+          "alt": "Diagrama de Ishikawa: red inestable e insegura que afecta cobros y operación, con causas en métodos de conexión, recursos tecnológicos, RRHH, entorno de uso y gestión municipal"
+        }
+      }
+    },
+    {
+      "id": "metodo",
+      "numero": 3,
+      "nombre": "Método",
+      "contenido": {
+        "etiqueta": "Método",
+        "titulo": "Primero se releva; después se dimensiona y se mejora",
+        "bajada": "Medir antes de comprar, configurar o prometer.",
+        "pasos": [
+          {
+            "titulo": "Medir",
+            "texto": "Proveedor, velocidad real, enlaces, router, switches, AP, cobertura, canales e interferencias."
+          },
+          {
+            "titulo": "Identificar",
+            "texto": "Puestos, responsables, dispositivos, cobros y necesidades de conectividad."
+          },
+          {
+            "titulo": "Registrar",
+            "texto": "Frecuencia, duración, sectores, horarios y tiempos de resolución."
+          },
+          {
+            "titulo": "Priorizar",
+            "texto": "Continuidad de cobros, seguridad, inventario, incidentes y capacitación."
+          }
+        ],
+        "aviso": "El relevamiento no debe recopilar credenciales, datos completos de tarjetas ni claves bancarias."
+      }
+    },
+    {
+      "id": "arquitectura",
+      "numero": 4,
+      "nombre": "Arquitectura",
+      "contenido": {
+        "etiqueta": "Arquitectura",
+        "titulo": "Una arquitectura segmentada protege la operación sin frenar el trabajo",
+        "puntos": [
+          "Internet → router/firewall administrable → switch con VLAN → AP y equipos cableados.",
+          "Redes separadas para administración, comerciantes, visitantes, infraestructura y servicios internos; comunicaciones entre VLAN bloqueadas por defecto, con solo excepciones necesarias.",
+          "SSID diferenciados, WPA3 o WPA2-AES, aislamiento de clientes y estudio de cobertura.",
+          "Evaluar segundo proveedor y failover; distinguir caída del enlace, saturación, Wi-Fi y aplicación de pagos."
+        ],
+        "imagen": {
+          "src": "img/topologia.jpg",
+          "alt": "Topología de red y segmentación de VLANs: internet, firewall o router principal, switch administrable y cinco VLAN para administración, comerciantes, visitantes, infraestructura y servicios internos"
+        }
+      }
+    },
+    {
+      "id": "uso-cotidiano",
+      "numero": 5,
+      "nombre": "Uso cotidiano",
+      "contenido": {
+        "etiqueta": "Uso cotidiano",
+        "titulo": "La defensa contra MITM empieza en el uso cotidiano",
+        "puntos": [
+          "Conectarse solo a redes oficiales; desactivar conexión automática a Wi-Fi desconocido y WPS cuando no sea necesario.",
+          "Usar HTTPS/TLS válido, firmware actualizado y nunca instalar certificados desconocidos.",
+          "Proteger celulares y POS con PIN, biometría, MFA y aplicaciones oficiales.",
+          "Verificar el pago dentro de la cuenta o aplicación; no confiar solo en capturas de pantalla.",
+          "Ante sospecha: informar, identificar, aislar, revocar credenciales, revisar registros y documentar."
+        ],
+        "imagen": {
+          "src": "img/cobro.jpg",
+          "alt": "Ilustración de una clienta y un comerciante en un puesto de frutas del mercado"
+        }
+      }
+    },
+    {
+      "id": "datos",
+      "numero": 6,
+      "nombre": "Datos trazables",
+      "contenido": {
+        "etiqueta": "Datos trazables",
+        "titulo": "La base relacional convierte puestos, equipos e incidentes en un sistema trazable",
+        "parrafos": [
+          "MySQL/MariaDB con InnoDB, ACID, normalización hasta 3NF y claves foráneas. Tablas núcleo: Puestos, Dispositivos, Asignaciones, Usuarios, Roles, Incidentes y Auditoría.",
+          "RBAC separa administradores, soporte, comerciantes y gestión municipal. El DER conserva reasignaciones de dispositivos y vincula puesto, equipo, reportante y técnico."
+        ],
+        "diagrama": {
+          "descripcion": "Diagrama entidad-relación",
+          "centro": [
+            "Historial de",
+            "asignaciones"
+          ],
+          "nodos": [
+            "Puestos",
+            "Dispositivos",
+            "Usuarios",
+            "Roles",
+            "Incidentes",
+            "Auditoría",
+            "Asignaciones"
+          ]
+        }
+      }
+    },
+    {
+      "id": "evidencia",
+      "numero": 7,
+      "nombre": "Evidencia",
+      "contenido": {
+        "etiqueta": "Evidencia operativa",
+        "titulo": "Triggers JSON y consultas SQL convierten los cambios en evidencia",
+        "bajada": "Cambio → trigger → reporte",
+        "bloques": [
+          {
+            "titulo": "DDL",
+            "codigo": "CREATE TABLE incidentes (\n  id INT, estado\n  VARCHAR(30)\n);"
+          },
+          {
+            "titulo": "Trigger JSON",
+            "codigo": "INSERT INTO auditoria\n(evento, anterior, nuevo)\nVALUES ('UPDATE',\nOLD.estado, NEW.estado);"
+          },
+          {
+            "titulo": "Consulta",
+            "codigo": "SELECT puesto_id, estado\nFROM incidentes\nWHERE estado IN\n('abierto','en proceso');"
+          }
+        ],
+        "notas": [
+          "DDL: base, tablas, índices, restricciones, datos de prueba y vistas. Triggers: INSERT, UPDATE y DELETE con valores anteriores y nuevos; auditan estados o MAC de dispositivos, avances de incidentes y bajas de usuarios. Consultas: inventario activo por puesto y tablero de incidentes abiertos o en proceso.",
+          "El script completo queda como anexo técnico; en pantalla solo se muestran fragmentos destacados."
+        ]
+      }
+    },
+    {
+      "id": "incidentes",
+      "numero": 8,
+      "nombre": "Incidentes",
+      "contenido": {
+        "etiqueta": "Incidentes",
+        "titulo": "Un sistema de tickets acorta el camino entre falla y solución",
+        "bajada": "Cada paso deja una evidencia y un responsable.",
+        "pasos": [
+          {
+            "titulo": "Reportar",
+            "texto": "Puesto, hora, dispositivo y descripción."
+          },
+          {
+            "titulo": "Priorizar",
+            "texto": "Impacto, severidad y responsable."
+          },
+          {
+            "titulo": "Resolver",
+            "texto": "Documentar diagnóstico, acciones y evidencias."
+          },
+          {
+            "titulo": "Cerrar",
+            "texto": "Verificar el servicio y registrar el tiempo."
+          }
+        ],
+        "aviso": "La auditoría conserva quién realizó la operación, cuándo, desde qué origen y qué información cambió."
+      }
+    },
+    {
+      "id": "capacitacion",
+      "numero": 9,
+      "nombre": "Capacitación",
+      "contenido": {
+        "etiqueta": "Capacitación",
+        "titulo": "La capacitación debe enseñar a cobrar, detectar y reportar",
+        "modulos": [
+          {
+            "icono": "📶",
+            "titulo": "Redes y Wi-Fi",
+            "texto": "SSID oficiales, riesgos y uso responsable.",
+            "duracion": "45 min"
+          },
+          {
+            "icono": "💲",
+            "titulo": "Fraudes en cobros",
+            "texto": "Acreditación real, comprobantes falsos y manipulación de POS.",
+            "duracion": "60 min"
+          },
+          {
+            "icono": "🔑",
+            "titulo": "Phishing y credenciales",
+            "texto": "Contraseñas robustas, MFA y soporte oficial.",
+            "duracion": "60 min"
+          },
+          {
+            "icono": "🎫",
+            "titulo": "Gestión",
+            "texto": "Incidentes, accesos, tickets y trazabilidad.",
+            "duracion": "60 min"
+          }
+        ],
+        "aviso": "Talleres breves, guías de bolsillo, cápsulas semanales e inducción para nuevos comerciantes."
+      }
+    },
+    {
+      "id": "valor",
+      "numero": 10,
+      "nombre": "Valor estratégico",
+      "contenido": {
+        "etiqueta": "Valor estratégico",
+        "titulo": "Medir y ajustar convierte la mejora técnica en valor estratégico",
+        "indicadores": [
+          {
+            "prefijo": "≥",
+            "valor": 99,
+            "sufijo": "%",
+            "etiqueta": "Disponibilidad"
+          },
+          {
+            "prefijo": "≥",
+            "valor": 90,
+            "sufijo": "%",
+            "etiqueta": "Capacitación"
+          },
+          {
+            "prefijo": "",
+            "valor": 100,
+            "sufijo": "%",
+            "etiqueta": "Onboarding"
+          },
+          {
+            "prefijo": "",
+            "valor": 100,
+            "sufijo": "%",
+            "etiqueta": "Inventario completo"
+          }
+        ],
+        "bloques": [
+          {
+            "titulo": "Indicadores",
+            "texto": "MTTR, primera respuesta, incidentes recurrentes, tickets formalizados y demora promedio de cobros."
+          },
+          {
+            "titulo": "Ciclo de ajuste",
+            "texto": "Evaluar antes, durante y a los 30 y 90 días con semáforo verde, amarillo y rojo."
+          }
+        ],
+        "aviso": "La arquitectura modular permite sumar puestos y dispositivos sin perder seguridad ni trazabilidad.",
+        "resultado": "Resultado esperado: un mercado más seguro, resiliente y eficiente para comerciantes, municipio y visitantes."
+      }
+    }
+  ]
+}</script>
+<script>var IMG={};</script>
+<script>
+(function(){
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var COL={rosa:"var(--pink)",amarillo:"var(--yellow)",naranja:"var(--orange)",verde:"var(--green)",blanco:"#fff"};
+var src=function(p){return IMG[p]||p};
+function shot(im){return '<button class="shot" type="button" aria-label="'+esc(M.ampliar+": "+im.alt)+'"><img src="'+src(im.src)+'" alt="'+esc(im.alt)+'"><span class="hint">🔍 '+esc(M.ampliar)+'</span></button>'}
+function tag(t){return '<div class="tag" data-r>'+esc(t)+'</div>'}
+function map(a,f){return a.map(f).join("")}
+function pasos(arr,pad){return '<div class="grid g4">'+map(arr,function(p,i){return '<div data-r><div class="badge'+(i===arr.length-1?' o':'')+'">'+(pad?'0'+(i+1):i+1)+'</div><h3>'+esc(p.titulo)+'</h3><p>'+esc(p.texto)+'</p></div>'}).replace(/^/,'')+'</div>'}
+function hl(code){
+  var re=/('[^']*')|\b(CREATE TABLE|INSERT INTO|VALUES|SELECT|FROM|WHERE|IN|INT|VARCHAR)\b|\b(\d+)\b/g,out="",last=0,m;
+  while((m=re.exec(code))){out+=esc(code.slice(last,m.index))+'<span class="'+(m[1]?'s':m[3]?'s':'k')+'">'+esc(m[0])+'</span>';last=re.lastIndex}
+  return out+esc(code.slice(last));
+}
+var R={
+portada:function(c){return '<div class="wrap"><div class="hcard" data-r="l">'+tag(c.etiqueta)+'<h1 data-r>'+esc(c.titulo)+'</h1><p class="lead" data-r>'+esc(c.bajada)+'</p><div class="steps" data-r>'+c.pasos.map(function(p,i){return '<b'+(i===c.pasos.length-1?' class="o"':'')+'>'+(i+1)+'</b>'+(i<c.pasos.length-1?'<i style="--i:'+i+'"></i>':'')}).join("")+'</div><div class="stl" data-r>'+map(c.pasos,function(p){return '<span>'+esc(p)+'</span>'})+'</div></div></div><div class="scroll" aria-hidden="true">'+esc(M.indicadorScroll)+'</div>'},
+diagnostico:function(c){return '<div class="wrap split"><div>'+tag(c.etiqueta)+'<h2 data-r>'+esc(c.titulo)+'</h2><p class="lead" data-r>'+esc(c.bajada)+'</p><div data-r><h3>'+esc(c.actoresTitulo)+'</h3><div class="actors">'+map(c.actores,function(a){return '<span>'+esc(a)+'</span>'})+'</div></div></div><div data-r="r">'+shot(c.imagen)+'</div></div>'},
+metodo:function(c){return '<div class="wrap">'+tag(c.etiqueta)+'<h2 class="wide" data-r>'+esc(c.titulo)+'</h2><p class="lead" data-r>'+esc(c.bajada)+'</p>'+pasos(c.pasos,true)+'<div class="note" data-r>'+esc(c.aviso)+'</div></div>'},
+arquitectura:function(c){return '<div class="wrap split"><div>'+tag(c.etiqueta)+'<h2 class="wide" data-r>'+esc(c.titulo)+'</h2><ul class="bul">'+map(c.puntos,function(p){return '<li data-r>'+esc(p)+'</li>'})+'</ul></div><div data-r="r">'+shot(c.imagen)+'</div></div>'},
+"uso-cotidiano":function(c){return '<div class="wrap two"><div>'+tag(c.etiqueta)+'<h2 data-r>'+esc(c.titulo)+'</h2><ul class="chk">'+map(c.puntos,function(p){return '<li data-r>'+esc(p)+'</li>'})+'</ul></div><figure class="fig" data-r="z"><img src="'+src(c.imagen.src)+'" alt="'+esc(c.imagen.alt)+'" loading="lazy"></figure></div>'},
+datos:function(c){return '<div class="wrap two" style="align-items:center"><div>'+tag(c.etiqueta)+'<h2 class="wide" data-r>'+esc(c.titulo)+'</h2>'+map(c.parrafos,function(p){return '<p class="lead" data-r>'+esc(p)+'</p>'})+'</div><svg id="rel" viewBox="0 0 400 400" role="img" aria-label="'+esc(c.diagrama.descripcion)+'" data-r="z"></svg></div>'},
+evidencia:function(c){return '<div class="wrap">'+tag(c.etiqueta)+'<h2 class="wide" data-r>'+esc(c.titulo)+'</h2><p class="lead" data-r>'+esc(c.bajada)+'</p><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">'+map(c.bloques,function(b){return '<div class="card" data-r><h3 class="cl">'+esc(b.titulo)+'</h3><div class="code">'+hl(b.codigo)+'</div></div>'})+'</div>'+map(c.notas,function(n){return '<p class="small" data-r>'+esc(n)+'</p>'})+'</div>'},
+incidentes:function(c){return '<div class="wrap">'+tag(c.etiqueta)+'<h2 class="wide" data-r>'+esc(c.titulo)+'</h2><p class="lead" data-r>'+esc(c.bajada)+'</p>'+pasos(c.pasos,false).replace('class="grid g4"','class="grid g4 tl"')+'<div class="note" data-r>'+esc(c.aviso)+'</div></div>'},
+capacitacion:function(c){return '<div class="wrap">'+tag(c.etiqueta)+'<h2 data-r>'+esc(c.titulo)+'</h2><div class="grid g4">'+map(c.modulos,function(m){return '<div class="card" data-r><div class="ico">'+esc(m.icono)+'</div><h3>'+esc(m.titulo)+'</h3><p>'+esc(m.texto)+'</p><span class="dur">'+esc(m.duracion)+'</span></div>'})+'</div><div class="note" data-r>'+esc(c.aviso)+'</div></div>'},
+valor:function(c){return '<div class="wrap">'+tag(c.etiqueta)+'<h2 class="wide" data-r>'+esc(c.titulo)+'</h2><div class="kpi">'+map(c.indicadores,function(k){return '<div data-r><b data-c="'+k.valor+'" data-p="'+esc(k.prefijo)+'" data-s="'+esc(k.sufijo)+'">'+esc(k.prefijo)+k.valor+esc(k.sufijo)+'</b><span>'+esc(k.etiqueta)+'</span></div>'})+'</div><div class="cols"><div data-r>'+map(c.bloques,function(b){return '<h3>'+esc(b.titulo)+'</h3><p class="lead" style="font-size:1em">'+esc(b.texto)+'</p>'})+'</div><div data-r><div class="note" style="margin-top:0">'+esc(c.aviso)+'</div><footer>'+esc(c.resultado)+'</footer></div></div></div>'}
+};
+var M={};
+function load(){
+  return fetch("content.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()})
+   .catch(function(){return JSON.parse(document.getElementById("contenido").textContent)});
+}
+function relDiagram(d){
+  var svg=document.getElementById("rel");if(!svg)return;var ns="http://www.w3.org/2000/svg";
+  function mk(t,a){var e=document.createElementNS(ns,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  var cl=["#f4c430","#ff8a3d","#f4c430","#f4c430","#ff8a3d","#ff8a3d","#f4c430"],N=d.nodos.length;
+  d.nodos.forEach(function(n,i){
+    var a=-Math.PI/2+i*2*Math.PI/N,x=200+Math.cos(a)*140,y=200+Math.sin(a)*140;
+    svg.appendChild(mk("line",{x1:200,y1:200,x2:x,y2:y,style:"--i:"+i}));
+    var g=mk("g",{"class":"n",style:"--i:"+i});g.appendChild(mk("circle",{cx:x,cy:y,r:35,fill:cl[i%cl.length]}));
+    var t=mk("text",{x:x,y:y+4});t.textContent=n;g.appendChild(t);svg.appendChild(g)});
+  var c=mk("g",{"class":"n",style:"--i:0"});c.appendChild(mk("circle",{cx:200,cy:200,r:48,fill:"#f0589b"}));
+  d.centro.forEach(function(w,i){var t=mk("text",{x:200,y:196+i*13});t.style.fill="#fff";t.textContent=w;c.appendChild(t)});svg.appendChild(c);
+}
+var ct=0;function count(s){var my=++ct;if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  [].forEach.call(s.querySelectorAll("[data-c]"),function(b){var to=+b.dataset.c,p=b.dataset.p,su=b.dataset.s,t0=null;
+   (function f(t){t0=t0||t;var k=Math.min((t-t0)/1400,1);b.textContent=p+Math.round(to*(1-Math.pow(1-k,3)))+su;if(k<1&&my===ct)requestAnimationFrame(f)})(performance.now())})}
+function start(data){
+  M=data.meta;document.title=M.titulo;
+  var app=document.getElementById("app"),nav=document.getElementById("nav");nav.setAttribute("aria-label",M.navegacion);
+  data.diapositivas.forEach(function(d){
+    var s=document.createElement("section");s.id=d.id;s.dataset.n=d.numero;s.innerHTML=R[d.id](d.contenido);app.appendChild(s);
+    [].forEach.call(s.querySelectorAll("[data-r]"),function(e,k){e.style.setProperty("--i",k)});
+    var a=document.createElement("a");a.href="#"+d.id;a.title=d.nombre;a.setAttribute("aria-label",d.nombre);nav.appendChild(a);
+    if(d.id==="datos")relDiagram(d.contenido.diagrama);
+    if(d.id==="portada")document.getElementById("bgimg").style.backgroundImage='url("'+src(d.contenido.fondo.src)+'")';
+  });
+  /* visor: clic en una imagen para ampliarla */
+  var lb=document.createElement("div");lb.id="lb";lb.hidden=true;lb.setAttribute("role","dialog");lb.setAttribute("aria-modal","true");lb.setAttribute("aria-label",M.ampliar);
+  lb.innerHTML='<button class="x" type="button" aria-label="'+esc(M.cerrar)+'">✕</button><img alt=""><p class="hint">'+esc(M.ayudaZoom)+'</p>';document.body.appendChild(lb);
+  var li=lb.querySelector("img"),lx=lb.querySelector(".x"),last=null;
+  function openLb(b){var im=b.querySelector("img");li.src=im.src;li.alt=im.alt;lb.classList.remove("z");lb.hidden=false;lb.scrollTop=lb.scrollLeft=0;document.documentElement.style.overflow="hidden";last=b;lx.focus()}
+  function closeLb(){lb.hidden=true;document.documentElement.style.overflow="";if(last)last.focus({preventScroll:true})}
+  lx.onclick=closeLb;
+  lb.addEventListener("click",function(e){if(e.target===lb)closeLb()});
+  li.addEventListener("click",function(e){var r=li.getBoundingClientRect(),fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;lb.classList.toggle("z");var n=li.getBoundingClientRect();lb.scrollLeft+=n.left+fx*n.width-e.clientX;lb.scrollTop+=n.top+fy*n.height-e.clientY});
+  app.addEventListener("click",function(e){var b=e.target.closest(".shot");if(b)openLb(b)});
+  addEventListener("keydown",function(e){if(!lb.hidden&&e.key==="Escape")closeLb()});
+  Object.keys(IMG).forEach(function(k){var i=new Image();i.src=IMG[k];if(i.decode)i.decode().catch(function(){})});
+  var secs=[].slice.call(app.children),dots=nav.querySelectorAll("a"),bar=document.getElementById("bar"),bg=document.getElementById("bg");
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){var s=e.target;
+    if(e.isIntersecting){s.classList.add("in");dots.forEach(function(d,i){d.classList.toggle("on",secs[i]===s)});if(s.id==="valor")count(s)}
+    else{s.style.setProperty("--dy",(s.getBoundingClientRect().top<0?-34:34)+"px");s.classList.remove("in")}})},{rootMargin:"-20% 0px -20% 0px",threshold:0});
+  secs.forEach(function(s){io.observe(s)});
+  /* el velo oscurece la portada al avanzar, y deja el fondo apenas visible */
+  function prog(){var h=document.documentElement,y=h.scrollTop;
+    bar.style.transform="scaleX("+(y/(h.scrollHeight-h.clientHeight||1))+")";
+    bg.style.setProperty("--v",(.9*Math.min(1,y/(innerHeight*.85))).toFixed(3))}
+  addEventListener("scroll",prog,{passive:true});addEventListener("resize",prog);prog();
+  addEventListener("keydown",function(e){if(!lb.hidden)return;var k=e.key;if(["ArrowDown","PageDown","ArrowUp","PageUp"].indexOf(k)<0)return;
+    var cur=0;secs.forEach(function(s,i){if(s.getBoundingClientRect().top<innerHeight*.5)cur=i});
+    var n=Math.max(0,Math.min(secs.length-1,cur+(k==="ArrowDown"||k==="PageDown"?1:-1)));e.preventDefault();secs[n].scrollIntoView({behavior:"smooth"})});
+}
+load().then(function(d){M=d.meta;start(d)});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "titulo": "El Portal del Pueblo necesita una operación digital más confiable",
+    "navegacion": "Secciones",
+    "indicadorScroll": "Desplazá hacia abajo ↓",
+    "ampliar": "Ampliar imagen",
+    "cerrar": "Cerrar imagen",
+    "ayudaZoom": "Hacé clic en la imagen para acercar o alejar. Esc para cerrar."
+  },
+  "diapositivas": [
+    {
+      "id": "portada",
+      "numero": 1,
+      "nombre": "Inicio",
+      "contenido": {
+        "fondo": {
+          "src": "img/portada.jpg",
+          "alt": "Ilustración azul de un mercado comunitario"
+        },
+        "etiqueta": "Mercado Comunitario · San Rafael",
+        "titulo": "El Portal del Pueblo necesita una operación digital más confiable",
+        "bajada": "Red segura, protección de datos, gestión de incidentes y capacitación.",
+        "pasos": [
+          "Diagnóstico",
+          "Operación",
+          "Mejora continua"
+        ]
+      }
+    },
+    {
+      "id": "diagnostico",
+      "numero": 2,
+      "nombre": "Diagnóstico",
+      "contenido": {
+        "etiqueta": "Diagnóstico",
+        "titulo": "El problema combina saturación, red compartida y falta de control",
+        "bajada": "Cinco familias explican la falla; seis actores la viven.",
+        "actoresTitulo": "Quiénes la viven",
+        "actores": [
+          "Municipalidad",
+          "Tecnología",
+          "Comerciantes",
+          "Administración",
+          "Proveedores",
+          "Visitantes"
+        ],
+        "imagen": {
+          "src": "img/ishikawa.jpg",
+          "alt": "Diagrama de Ishikawa: red inestable e insegura que afecta cobros y operación, con causas en métodos de conexión, recursos tecnológicos, RRHH, entorno de uso y gestión municipal"
+        }
+      }
+    },
+    {
+      "id": "metodo",
+      "numero": 3,
+      "nombre": "Método",
+      "contenido": {
+        "etiqueta": "Método",
+        "titulo": "Primero se releva; después se dimensiona y se mejora",
+        "bajada": "Medir antes de comprar, configurar o prometer.",
+        "pasos": [
+          {
+            "titulo": "Medir",
+            "texto": "Proveedor, velocidad real, enlaces, router, switches, AP, cobertura, canales e interferencias."
+          },
+          {
+            "titulo": "Identificar",
+            "texto": "Puestos, responsables, dispositivos, cobros y necesidades de conectividad."
+          },
+          {
+            "titulo": "Registrar",
+            "texto": "Frecuencia, duración, sectores, horarios y tiempos de resolución."
+          },
+          {
+            "titulo": "Priorizar",
+            "texto": "Continuidad de cobros, seguridad, inventario, incidentes y capacitación."
+          }
+        ],
+        "aviso": "El relevamiento no debe recopilar credenciales, datos completos de tarjetas ni claves bancarias."
+      }
+    },
+    {
+      "id": "arquitectura",
+      "numero": 4,
+      "nombre": "Arquitectura",
+      "contenido": {
+        "etiqueta": "Arquitectura",
+        "titulo": "Una arquitectura segmentada protege la operación sin frenar el trabajo",
+        "puntos": [
+          "Internet → router/firewall administrable → switch con VLAN → AP y equipos cableados.",
+          "Redes separadas para administración, comerciantes, visitantes, infraestructura y servicios internos; comunicaciones entre VLAN bloqueadas por defecto, con solo excepciones necesarias.",
+          "SSID diferenciados, WPA3 o WPA2-AES, aislamiento de clientes y estudio de cobertura.",
+          "Evaluar segundo proveedor y failover; distinguir caída del enlace, saturación, Wi-Fi y aplicación de pagos."
+        ],
+        "imagen": {
+          "src": "img/topologia.jpg",
+          "alt": "Topología de red y segmentación de VLANs: internet, firewall o router principal, switch administrable y cinco VLAN para administración, comerciantes, visitantes, infraestructura y servicios internos"
+        }
+      }
+    },
+    {
+      "id": "uso-cotidiano",
+      "numero": 5,
+      "nombre": "Uso cotidiano",
+      "contenido": {
+        "etiqueta": "Uso cotidiano",
+        "titulo": "La defensa contra MITM empieza en el uso cotidiano",
+        "puntos": [
+          "Conectarse solo a redes oficiales; desactivar conexión automática a Wi-Fi desconocido y WPS cuando no sea necesario.",
+          "Usar HTTPS/TLS válido, firmware actualizado y nunca instalar certificados desconocidos.",
+          "Proteger celulares y POS con PIN, biometría, MFA y aplicaciones oficiales.",
+          "Verificar el pago dentro de la cuenta o aplicación; no confiar solo en capturas de pantalla.",
+          "Ante sospecha: informar, identificar, aislar, revocar credenciales, revisar registros y documentar."
+        ],
+        "imagen": {
+          "src": "img/cobro.jpg",
+          "alt": "Ilustración de una clienta y un comerciante en un puesto de frutas del mercado"
+        }
+      }
+    },
+    {
+      "id": "datos",
+      "numero": 6,
+      "nombre": "Datos trazables",
+      "contenido": {
+        "etiqueta": "Datos trazables",
+        "titulo": "La base relacional convierte puestos, equipos e incidentes en un sistema trazable",
+        "parrafos": [
+          "MySQL/MariaDB con InnoDB, ACID, normalización hasta 3NF y claves foráneas. Tablas núcleo: Puestos, Dispositivos, Asignaciones, Usuarios, Roles, Incidentes y Auditoría.",
+          "RBAC separa administradores, soporte, comerciantes y gestión municipal. El DER conserva reasignaciones de dispositivos y vincula puesto, equipo, reportante y técnico."
+        ],
+        "diagrama": {
+          "descripcion": "Diagrama entidad-relación",
+          "centro": [
+            "Historial de",
+            "asignaciones"
+          ],
+          "nodos": [
+            "Puestos",
+            "Dispositivos",
+            "Usuarios",
+            "Roles",
+            "Incidentes",
+            "Auditoría",
+            "Asignaciones"
+          ]
+        }
+      }
+    },
+    {
+      "id": "evidencia",
+      "numero": 7,
+      "nombre": "Evidencia",
+      "contenido": {
+        "etiqueta": "Evidencia operativa",
+        "titulo": "Triggers JSON y consultas SQL convierten los cambios en evidencia",
+        "bajada": "Cambio → trigger → reporte",
+        "bloques": [
+          {
+            "titulo": "DDL",
+            "codigo": "CREATE TABLE incidentes (\n  id INT, estado\n  VARCHAR(30)\n);"
+          },
+          {
+            "titulo": "Trigger JSON",
+            "codigo": "INSERT INTO auditoria\n(evento, anterior, nuevo)\nVALUES ('UPDATE',\nOLD.estado, NEW.estado);"
+          },
+          {
+            "titulo": "Consulta",
+            "codigo": "SELECT puesto_id, estado\nFROM incidentes\nWHERE estado IN\n('abierto','en proceso');"
+          }
+        ],
+        "notas": [
+          "DDL: base, tablas, índices, restricciones, datos de prueba y vistas. Triggers: INSERT, UPDATE y DELETE con valores anteriores y nuevos; auditan estados o MAC de dispositivos, avances de incidentes y bajas de usuarios. Consultas: inventario activo por puesto y tablero de incidentes abiertos o en proceso.",
+          "El script completo queda como anexo técnico; en pantalla solo se muestran fragmentos destacados."
+        ]
+      }
+    },
+    {
+      "id": "incidentes",
+      "numero": 8,
+      "nombre": "Incidentes",
+      "contenido": {
+        "etiqueta": "Incidentes",
+        "titulo": "Un sistema de tickets acorta el camino entre falla y solución",
+        "bajada": "Cada paso deja una evidencia y un responsable.",
+        "pasos": [
+          {
+            "titulo": "Reportar",
+            "texto": "Puesto, hora, dispositivo y descripción."
+          },
+          {
+            "titulo": "Priorizar",
+            "texto": "Impacto, severidad y responsable."
+          },
+          {
+            "titulo": "Resolver",
+            "texto": "Documentar diagnóstico, acciones y evidencias."
+          },
+          {
+            "titulo": "Cerrar",
+            "texto": "Verificar el servicio y registrar el tiempo."
+          }
+        ],
+        "aviso": "La auditoría conserva quién realizó la operación, cuándo, desde qué origen y qué información cambió."
+      }
+    },
+    {
+      "id": "capacitacion",
+      "numero": 9,
+      "nombre": "Capacitación",
+      "contenido": {
+        "etiqueta": "Capacitación",
+        "titulo": "La capacitación debe enseñar a cobrar, detectar y reportar",
+        "modulos": [
+          {
+            "icono": "📶",
+            "titulo": "Redes y Wi-Fi",
+            "texto": "SSID oficiales, riesgos y uso responsable.",
+            "duracion": "45 min"
+          },
+          {
+            "icono": "💲",
+            "titulo": "Fraudes en cobros",
+            "texto": "Acreditación real, comprobantes falsos y manipulación de POS.",
+            "duracion": "60 min"
+          },
+          {
+            "icono": "🔑",
+            "titulo": "Phishing y credenciales",
+            "texto": "Contraseñas robustas, MFA y soporte oficial.",
+            "duracion": "60 min"
+          },
+          {
+            "icono": "🎫",
+            "titulo": "Gestión",
+            "texto": "Incidentes, accesos, tickets y trazabilidad.",
+            "duracion": "60 min"
+          }
+        ],
+        "aviso": "Talleres breves, guías de bolsillo, cápsulas semanales e inducción para nuevos comerciantes."
+      }
+    },
+    {
+      "id": "valor",
+      "numero": 10,
+      "nombre": "Valor estratégico",
+      "contenido": {
+        "etiqueta": "Valor estratégico",
+        "titulo": "Medir y ajustar convierte la mejora técnica en valor estratégico",
+        "indicadores": [
+          {
+            "prefijo": "≥",
+            "valor": 99,
+            "sufijo": "%",
+            "etiqueta": "Disponibilidad"
+          },
+          {
+            "prefijo": "≥",
+            "valor": 90,
+            "sufijo": "%",
+            "etiqueta": "Capacitación"
+          },
+          {
+            "prefijo": "",
+            "valor": 100,
+            "sufijo": "%",
+            "etiqueta": "Onboarding"
+          },
+          {
+            "prefijo": "",
+            "valor": 100,
+            "sufijo": "%",
+            "etiqueta": "Inventario completo"
+          }
+        ],
+        "bloques": [
+          {
+            "titulo": "Indicadores",
+            "texto": "MTTR, primera respuesta, incidentes recurrentes, tickets formalizados y demora promedio de cobros."
+          },
+          {
+            "titulo": "Ciclo de ajuste",
+            "texto": "Evaluar antes, durante y a los 30 y 90 días con semáforo verde, amarillo y rojo."
+          }
+        ],
+        "aviso": "La arquitectura modular permite sumar puestos y dispositivos sin perder seguridad ni trazabilidad.",
+        "resultado": "Resultado esperado: un mercado más seguro, resiliente y eficiente para comerciantes, municipio y visitantes."
+      }
+    }
+  ]
+}
