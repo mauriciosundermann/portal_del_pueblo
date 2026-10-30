@@ -80,27 +80,8 @@
       }
     },
     {
-      "id": "arquitectura",
-      "numero": 4,
-      "nombre": "Arquitectura",
-      "contenido": {
-        "etiqueta": "Arquitectura",
-        "titulo": "Una arquitectura segmentada protege la operación sin frenar el trabajo",
-        "puntos": [
-          "Internet → router/firewall administrable → switch con VLAN → AP y equipos cableados.",
-          "Redes separadas para administración, comerciantes, visitantes, infraestructura y servicios internos; comunicaciones entre VLAN bloqueadas por defecto, con solo excepciones necesarias.",
-          "SSID diferenciados, WPA3 o WPA2-AES, aislamiento de clientes y estudio de cobertura.",
-          "Evaluar segundo proveedor y failover; distinguir caída del enlace, saturación, Wi-Fi y aplicación de pagos."
-        ],
-        "imagen": {
-          "src": "img/topologia.jpg",
-          "alt": "Topología de red y segmentación de VLANs: internet, firewall o router principal, switch administrable y cinco VLAN para administración, comerciantes, visitantes, infraestructura y servicios internos"
-        }
-      }
-    },
-    {
       "id": "uso-cotidiano",
-      "numero": 5,
+      "numero": 4,
       "nombre": "Uso cotidiano",
       "contenido": {
         "etiqueta": "Uso cotidiano",
@@ -114,6 +95,25 @@
         "imagen": {
           "src": "img/cobro.jpg",
           "alt": "Ilustración de una clienta y un comerciante en un puesto de frutas del mercado"
+        }
+      }
+    },
+    {
+      "id": "arquitectura",
+      "numero": 5,
+      "nombre": "Arquitectura",
+      "contenido": {
+        "etiqueta": "Arquitectura",
+        "titulo": "Una arquitectura segmentada protege la operación sin frenar el trabajo",
+        "puntos": [
+          "Internet → router/firewall administrable → switch con VLAN → AP y equipos cableados.",
+          "Redes separadas para administración, comerciantes, visitantes, infraestructura y servicios internos; comunicaciones entre VLAN bloqueadas por defecto, con solo excepciones necesarias.",
+          "SSID diferenciados, WPA3 o WPA2-AES, aislamiento de clientes y estudio de cobertura.",
+          "Evaluar segundo proveedor y failover; distinguir caída del enlace, saturación, Wi-Fi y aplicación de pagos."
+        ],
+        "imagen": {
+          "src": "img/topologia.jpg",
+          "alt": "Topología de red y segmentación de VLANs: internet, firewall o router principal, switch administrable y cinco VLAN para administración, comerciantes, visitantes, infraestructura y servicios internos"
         }
       }
     },
