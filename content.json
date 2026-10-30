@@ -15,7 +15,11 @@
       "contenido": {
         "fondo": {
           "src": "img/portada.jpg",
-          "alt": "Ilustración azul de un mercado comunitario"
+          "alt": "Ilustración azul de un mercado comunitario",
+          "video": [
+            "video/portada.mp4",
+            "video/portada.webm"
+          ]
         },
         "etiqueta": "Mercado Comunitario · San Rafael",
         "titulo": "El Portal del Pueblo necesita una operación digital más confiable",

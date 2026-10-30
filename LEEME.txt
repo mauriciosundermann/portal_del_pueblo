@@ -5,6 +5,7 @@ Contenido
   index.html     La página (animaciones, estilos y lógica).
   content.json   Todos los textos, separados por diapositiva (id, número, nombre y contenido).
   img/           Imágenes: portada.jpg, cobro.jpg, ishikawa.jpg, topologia.jpg.
+  video/         Video de fondo en bucle de la portada en bucle sin corte, ida y vuelta de 14 s (portada.mp4 y portada.webm).
 
 Cómo usarla
   1. Subí la carpeta completa a cualquier hosting estático (Netlify, GitHub Pages,
@@ -23,3 +24,7 @@ Cómo editar textos
 Notas
   - Las tipografías vienen de Google Fonts; sin internet se usan tipografías del sistema.
   - Hacé clic en el diagrama de Diagnóstico o en la topología de Arquitectura para ampliarlos.
+  - El video de fondo se repite sin corte. Si el visitante tiene activada la opción de
+    'reducir movimiento' o el ahorro de datos, se muestra solo la imagen de portada.
+  - Para usar otro video: reemplazá los archivos de video/ (o editá la lista "video" de la
+    portada en content.json). Se usa el primer formato que el navegador pueda reproducir.

@@ -17,7 +17,10 @@ body{margin:0;color:var(--ink);font:400 clamp(1rem,1.15vw,1.15rem)/1.55 var(--b)
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
 /* fondo fijo: imagen de portada + velo del color de la página */
 #bg{position:fixed;inset:0;z-index:0;background:var(--bg);overflow:hidden}
-#bg .img{position:absolute;inset:0;background-size:cover;background-position:74% center;background-repeat:no-repeat;animation:ken 2.6s cubic-bezier(.2,.7,.2,1) both}
+#bgm{position:absolute;inset:0;animation:ken 2.6s cubic-bezier(.2,.7,.2,1) both}
+#bg .img{position:absolute;inset:0;background-size:cover;background-position:74% center;background-repeat:no-repeat}
+#bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:74% center;opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+#bgvid.on{opacity:1}
 #bg .veil{position:absolute;inset:0;background:var(--bg);opacity:var(--v,0)}
 @keyframes ken{from{opacity:0;transform:scale(1.08)}}
 #bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:4px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--pink),var(--orange));z-index:31}
@@ -53,7 +56,7 @@ section:not(.in) .scroll{opacity:0}
 /* portada */
 #portada{padding-top:clamp(3rem,7vh,5rem)}
 .hcard{background:rgba(13,31,71,.94);border-radius:26px;padding:clamp(1.4rem,3vw,2.6rem);max-width:640px;box-shadow:0 30px 80px rgba(8,16,44,.45)}
-@media(max-width:899px){#portada{justify-content:flex-end}#bg .img{background-position:78% top}}
+@media(max-width:899px){#portada{justify-content:flex-end}#bg .img{background-position:78% top}#bgvid{object-position:78% top}}
 .steps{display:flex;align-items:center;margin-top:1.8rem}
 .steps i{flex:1;height:5px;background:var(--pink);transform:scaleX(0);transform-origin:left;transition:transform .9s ease;transition-delay:calc(var(--i)*350ms + 900ms)}
 .in .steps i{transform:none}.steps i.o{background:var(--orange)}
@@ -122,11 +125,11 @@ section:not(.in) .scroll{opacity:0}
 @media(min-width:900px){.cols{grid-template-columns:1fr 1fr}}
 footer{margin-top:1.4rem;color:var(--mute);max-width:62ch}
 :focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}[data-r]{opacity:1;transform:none}.fig img,.shot img{clip-path:none;transform:none}#rel line{stroke-dashoffset:0!important}}
+@media(prefers-reduced-motion:reduce){#bgvid{display:none}html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}[data-r]{opacity:1;transform:none}.fig img,.shot img{clip-path:none;transform:none}#rel line{stroke-dashoffset:0!important}}
 </style>
 </head>
 <body>
-<div id="bg"><div class="img" id="bgimg"></div><div class="veil"></div></div>
+<div id="bg"><div id="bgm"><div class="img" id="bgimg"></div><video id="bgvid" muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"></video></div><div class="veil"></div></div>
 <div id="bar"></div>
 <nav id="nav"></nav>
 <main id="app"></main>
@@ -149,7 +152,11 @@ footer{margin-top:1.4rem;color:var(--mute);max-width:62ch}
       "contenido": {
         "fondo": {
           "src": "img/portada.jpg",
-          "alt": "Ilustración azul de un mercado comunitario"
+          "alt": "Ilustración azul de un mercado comunitario",
+          "video": [
+            "video/portada.mp4",
+            "video/portada.webm"
+          ]
         },
         "etiqueta": "Mercado Comunitario · San Rafael",
         "titulo": "El Portal del Pueblo necesita una operación digital más confiable",
@@ -469,6 +476,16 @@ function relDiagram(d){
 var ct=0;function count(s){var my=++ct;if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
   [].forEach.call(s.querySelectorAll("[data-c]"),function(b){var to=+b.dataset.c,p=b.dataset.p,su=b.dataset.s,t0=null;
    (function f(t){t0=t0||t;var k=Math.min((t-t0)/1400,1);b.textContent=p+Math.round(to*(1-Math.pow(1-k,3)))+su;if(k<1&&my===ct)requestAnimationFrame(f)})(performance.now())})}
+/* video de fondo en bucle: se usa el primer formato que el navegador pueda reproducir; la imagen queda de respaldo */
+function bgVideo(list){
+  var v=document.getElementById("bgvid");
+  if(!list||!list.length||matchMedia("(prefers-reduced-motion:reduce)").matches||(navigator.connection&&navigator.connection.saveData))return;
+  var T={mp4:'video/mp4; codecs="avc1.640028"',webm:'video/webm; codecs="vp9"'},u=null;
+  list.forEach(function(p){var x=p.split(".").pop();if(!u&&T[x]&&v.canPlayType(T[x]))u=p});
+  if(!u)return;
+  v.muted=true;v.addEventListener("playing",function(){v.classList.add("on")});v.src=src(u);
+  var pl=v.play();if(pl&&pl.catch)pl.catch(function(){});
+}
 function start(data){
   M=data.meta;document.title=M.titulo;
   var app=document.getElementById("app"),nav=document.getElementById("nav");nav.setAttribute("aria-label",M.navegacion);
@@ -477,7 +494,7 @@ function start(data){
     [].forEach.call(s.querySelectorAll("[data-r]"),function(e,k){e.style.setProperty("--i",k)});
     var a=document.createElement("a");a.href="#"+d.id;a.title=d.nombre;a.setAttribute("aria-label",d.nombre);nav.appendChild(a);
     if(d.id==="datos")relDiagram(d.contenido.diagrama);
-    if(d.id==="portada")document.getElementById("bgimg").style.backgroundImage='url("'+src(d.contenido.fondo.src)+'")';
+    if(d.id==="portada"){var f=d.contenido.fondo;document.getElementById("bgimg").style.backgroundImage='url("'+src(f.src)+'")';bgVideo(f.video)}
   });
   /* visor: clic en una imagen para ampliarla */
   var lb=document.createElement("div");lb.id="lb";lb.hidden=true;lb.setAttribute("role","dialog");lb.setAttribute("aria-modal","true");lb.setAttribute("aria-label",M.ampliar);
